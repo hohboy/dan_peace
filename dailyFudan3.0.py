@@ -115,8 +115,8 @@ class Fudan:
         self.session.close()
         print("◉关闭会话")
         print("************************")
-        input("回车键退出")
-        sys_exit()
+        #input("回车键退出")
+        #sys_exit()
 
 class Zlapp(Fudan):
     last_info = ''
@@ -145,6 +145,7 @@ class Zlapp(Fudan):
         else:
             print("\n\n*******未提交*******")
             self.last_info = last_info["d"]["info"]
+            self.checkin()
 
     def checkin(self):
         """
@@ -169,10 +170,16 @@ class Zlapp(Fudan):
         print(save_msg,'\n\n')
 
 
-def get_account():
+def get_account(i):
+    uid = ['18307130235','18300200031']
+    psw = ['Ll11661166','wjx0810!']
+    a = uid[0]
+    b = psw[0]
+    return a,b
     """
     获取账号信息
     """
+'''
     print("\n\n请仔细阅读以下日志！！\n请仔细阅读以下日志！！！！\n请仔细阅读以下日志！！！！！！\n\n")
     if os_path.exists("account.txt"):
         print("读取账号中……")
@@ -192,19 +199,19 @@ def get_account():
             tmp = "uid:" + uid + "\npsw:" + psw + "\n\n\n以上两行冒号后分别写上学号密码，不要加空格/换行，谢谢\n\n请注意文件安全，不要放在明显位置\n\n可以从dailyFudan.exe创建快捷方式到桌面"
             new.write(tmp)
         print("账号已保存在目录下account.txt，请注意文件安全，不要放在明显位置\n\n建议拉个快捷方式到桌面")
-
-    return uid, psw
+'''
 if __name__ == '__main__':
-    uid, psw = get_account()
-    # print(uid, psw)
-    zlapp_login = 'https://uis.fudan.edu.cn/authserver/login?' \
-                  'service=https://zlapp.fudan.edu.cn/site/ncov/fudanDaily'
-    daily_fudan = Zlapp(uid, psw, url_login=zlapp_login)
-    daily_fudan.login()
-    
-    daily_fudan.check()
-    daily_fudan.checkin()
-    # 再检查一遍
-    daily_fudan.check()
-
-    daily_fudan.close()
+    for i in range(2) :
+        uid, psw = get_account(i)
+        # print(uid, psw)
+        zlapp_login = 'https://uis.fudan.edu.cn/authserver/login?' \
+                      'service=https://zlapp.fudan.edu.cn/site/ncov/fudanDaily'
+        daily_fudan = Zlapp(uid, psw, url_login=zlapp_login)
+        daily_fudan.login()
+        
+        daily_fudan.check()
+        #daily_fudan.checkin()
+        # 再检查一遍
+        #daily_fudan.check()
+    sys_exit()
+        #daily_fudan.close()
